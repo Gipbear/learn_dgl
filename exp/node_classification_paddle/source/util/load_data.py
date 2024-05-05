@@ -31,7 +31,8 @@ class ArixvDataSet(DGLBuiltinDataset):
         label = -np.ones(n_nodes, dtype=int)
         label[train_data[:, 0]] = train_data[:, 1]
         self._g.ndata['label'] = torch.from_numpy(label)
-        self._g.num_classes = len(torch.unique(self._g.ndata['label'])) - 1
+        self.labels = self._g.ndata['label'].unsqueeze(dim=1)
+        self._g.num_classes = len(torch.unique(self.labels)) - 1
         # mask
         train_part = int(train_data.shape[0] * 0.8)
         train_mask = torch.zeros(n_nodes, dtype=torch.bool)
@@ -45,12 +46,18 @@ class ArixvDataSet(DGLBuiltinDataset):
         self._g.ndata['val_mask'] = val_mask
         self._g.ndata['test_mask'] = test_mask
 
+    def get_idx_split(self):
+        train_idx = torch.nonzero(self._g.ndata['train_mask']).squeeze(dim=1).to(torch.long)
+        valid_idx = torch.nonzero(self._g.ndata['val_mask']).squeeze(dim=1).to(torch.long)
+        test_idx = torch.nonzero(self._g.ndata['test_mask']).squeeze(dim=1).to(torch.long)
+        return {'train': train_idx, 'valid': valid_idx, 'test': test_idx}
+
     def __getitem__(self, idx):
         assert idx == 0, "This dataset has only one graph"
         if self._transform is None:
-            return self._g
+            return self._g, self.labels
         else:
-            return self._transform(self._g)
+            return self._transform(self._g), self.labels
 
     def __len__(self):
         return 1
@@ -58,5 +65,5 @@ class ArixvDataSet(DGLBuiltinDataset):
 
 if __name__ == '__main__':
     data_set = ArixvDataSet('arixv', raw_dir='data')
-    graph = data_set[0]
-    print(graph)
+    graph, labels = data_set[0]
+    print(labels.max())
