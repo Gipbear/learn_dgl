@@ -1,6 +1,6 @@
 [submodule "exp/TransferNet"]
 	path = exp/TransferNet
-	url = git@github.com:Gipbear/TransferNet.git
+	url = https://github.com/Gipbear/TransferNet.git
 [submodule "exp/QAGNN"]
 	path = exp/QAGNN
-	url = git@github.com:Gipbear/qagnn.git
+	url = https://github.com/Gipbear/qagnn.git
