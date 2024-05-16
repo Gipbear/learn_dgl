@@ -109,7 +109,7 @@ class ModelFactory():
         f.close()
 
     def add_loss_name(self, loss_name, mode="min"):
-        self.loss_dict[loss_name] = []
+        self.loss_dict[loss_name] = [-1]  # 规避无测试集情况
         self.mode_dict[loss_name] = mode
 
     def append_loss(self, loss_name, loss_val):
@@ -158,3 +158,8 @@ class ModelFactory():
         print("Number of parameters (total): %d" % num_params_total)
         print("Number of parameters (requires grad): %d" % num_params_requires_grad)
         print("Number of parameters (no grad): %d" % num_params_no_grad)
+
+    def print_model(self):
+        print("model".center(100, '='))
+        print(self.model)
+        print("=" * 100)
