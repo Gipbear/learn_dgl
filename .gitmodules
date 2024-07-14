@@ -4,3 +4,6 @@
 [submodule "exp/QAGNN"]
 	path = exp/QAGNN
 	url = https://github.com/Gipbear/qagnn.git
+[submodule "exp/CorrectAndSmooth"]
+	path = exp/CorrectAndSmooth
+	url = https://github.com/Gipbear/CorrectAndSmooth.git

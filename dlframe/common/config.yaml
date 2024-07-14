@@ -1,0 +1,13 @@
+!modelConfig
+datasetConfig: !DatasetConfig
+  name: ''
+  data_root_path: ./data/
+modelHyperConfig: !ModelHyperConfig
+  n_input: -1
+  n_hidden: -1
+  n_output: -1
+trainHyperConfig: !TrainHyperConfig
+  lr: 0.005
+  criterion: ''
+  optimizer: ''
+  scheduler: ''
